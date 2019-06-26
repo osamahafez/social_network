@@ -4,7 +4,7 @@ const keys = require('./config/keys');
 const users = require('./routes/api/users');
 const profile = require('./routes/api/profile');
 const posts = require('./routes/api/posts');
-
+const bodyParser = require('body-parser');
 
 // mongoose connection
 const mongoose = require('mongoose');
@@ -15,6 +15,12 @@ db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', () => {
   console.log('Database Connected')
 });
+
+
+// parse application/x-www-form-urlencoded
+app.use(bodyParser.urlencoded({ extended: false }))
+// parse application/json
+app.use(bodyParser.json())
 
 
 app.get('/', (req, res) => {
