@@ -5,6 +5,7 @@ const gravatar = require('gravatar');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const keys = require('../../config/keys');
+const passport = require('passport');
 
 // @route GET api/users
 // @access Public
@@ -13,6 +14,7 @@ router.get('/', (req, res) => {
         msg: 'Users Page'
     });
 });
+
 
 // @route POST api/users/register
 // @desc register a user
@@ -62,7 +64,6 @@ router.post('/register', (req, res) => {
 // @access Public
 router.post('/login', (req, res) => {
 
-
     User.findOne({email: req.body.email})
         .then(user => {
             if(user) {
@@ -70,7 +71,7 @@ router.post('/login', (req, res) => {
                     .then((isEqual) => {
                         if(isEqual) {
                             
-                            //payload consists of user info
+                            //payload consists of user info used in token
                             const payload = {
                                 id: user._id,
                                 name: user.name,
@@ -105,6 +106,17 @@ router.post('/login', (req, res) => {
         })
         .catch(err => res.json(err));
 
+});
+
+// @route GET api/users/current
+// @desc Return current user
+// @access Private
+router.get('/current', passport.authenticate('jwt', {session:false}), (req, res) => {
+    return res.json({
+        id: req.user._id,
+        name: req.user.name,
+        email: req.user.email
+    });
 });
 
 
