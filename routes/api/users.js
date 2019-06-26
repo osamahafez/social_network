@@ -3,6 +3,8 @@ const router = express.Router();
 const User = require('../../models/User');
 const gravatar = require('gravatar');
 const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
+const keys = require('../../config/keys');
 
 // @route GET api/users
 // @access Public
@@ -53,5 +55,57 @@ router.post('/register', (req, res) => {
     });
 
 });
+
+
+// @route POST api/users/login
+// @desc Login a user / returning the JWT token
+// @access Public
+router.post('/login', (req, res) => {
+
+
+    User.findOne({email: req.body.email})
+        .then(user => {
+            if(user) {
+                bcrypt.compare(req.body.password, user.password)
+                    .then((isEqual) => {
+                        if(isEqual) {
+                            
+                            //payload consists of user info
+                            const payload = {
+                                id: user._id,
+                                name: user.name,
+                                avatar: user.avatar
+                            }
+
+                            jwt.sign(
+                                payload, 
+                                keys.JwtSecretKey, 
+                                { expiresIn: '5h' }, 
+                                (err, token) => {
+                                    if(err) {
+                                        return res.json({error: err});
+                                    }
+                                    else {
+                                        return res.status(200).json({
+                                            token: "Bearer " + token
+                                        });
+                                    }
+                            });
+
+                        }
+                        else {
+                            return res.status(400).json({password: "Password is not correct"})
+                        }
+                    })
+                    .catch(err => res.json(err));
+            }
+            else {
+                return res.status(404).json({email: "User is not found"})
+            }
+        })
+        .catch(err => res.json(err));
+
+});
+
 
 module.exports = router;
