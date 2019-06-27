@@ -6,6 +6,8 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const keys = require('../../config/keys');
 const passport = require('passport');
+const validateRegisterInput = require('../../validation/register');
+const validateLoginInput = require('../../validation/login');
 
 // @route GET api/users
 // @access Public
@@ -21,6 +23,12 @@ router.get('/', (req, res) => {
 // @access Public
 router.post('/register', (req, res) => {
     
+    // first validation
+    const {errors, errorsFound} = validateRegisterInput(req.body);
+    if(errorsFound) {
+        return res.status(400).json(errors);
+    }
+
     User.findOne({email: req.body.email})
     .then(user => {
         if(user) {
@@ -63,6 +71,12 @@ router.post('/register', (req, res) => {
 // @desc Login a user / returning the JWT token
 // @access Public
 router.post('/login', (req, res) => {
+
+    // first validation
+    const {errors, errorsFound} = validateLoginInput(req.body);
+    if(errorsFound) {
+        return res.status(400).json(errors);
+    }
 
     User.findOne({email: req.body.email})
         .then(user => {
