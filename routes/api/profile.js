@@ -2,6 +2,8 @@ const express = require('express')
 const router = express.Router()
 const passport = require('passport');
 const validateProfileInput = require('../../validation/profile');
+const validateExperienceInput = require('../../validation/experience');
+const validateEducationInput = require('../../validation/education');
 
 const User = require('../../models/User');
 const Profile = require('../../models/Profile');
@@ -133,9 +135,7 @@ router.get('/user/:user_id', (req, res) => {
                 return res.status(200).json(profile);
             }
             else {
-                return res.status(404).json({error: 
-
-'Profile Not Found'});
+                return res.status(404).json({error: 'Profile Not Found'});
             }
         })
         .catch(err => res.json(err)); 
@@ -151,18 +151,57 @@ router.get('/all', (req, res) => {
         .populate('user', ['name', 'avatar'])
         .then(profiles => {
             if(profiles) {
-                return res.status(200).json
-
-(profiles);
+                return res.status(200).json(profiles);
             }
             else {
-                return res.status(404).json({error: 
-
-'No Profiles Found'});
+                return res.status(404).json({error: 'No Profiles Found'});
             }
         })
         .catch(err => res.json(err));
 });
+
+// @route POST api/profile/experience
+// @desc add an experience to profile
+// @access Private
+router.post('/experience', passport.authenticate('jwt', {session: false}), (req, res) => {
+
+    const {errors, errorsFound} = validateExperienceInput(req.body);
+    if(errorsFound) {
+        return res.status(400).json(errors);
+    }
+
+
+    Profile.findOne({user: req.user._id})
+        .then(profile => {
+            if(!profile) {
+                return res.status(404).json({error: 'Profile is not found'});
+            } 
+            else {
+                const newExp = {
+                    title: req.body.title,
+                    description: req.body.description,
+                    company: req.body.company,
+                    location: req.body.location,
+                    from: req.body.from,
+                    to: req.body.to,
+                    current: req.body.current
+                }
+
+                profile.experience.unshift(newExp);
+                profile.save()
+                    .then(newProfile => res.status(200).json(newProfile))
+                    .catch(err => res.json(err));
+            }
+        })
+        .catch(err => res.json(err));
+
+});
+
+
+
+
+
+
 
 
 
