@@ -78,24 +78,85 @@ router.post('/', passport.authenticate('jwt', {session: false}), (req, res) => {
                 // Create
 
                 // check first if the handle is used by someone else
-                Profile.find({handle: profileFields.handle})
+                Profile.findOne({handle: profileFields.handle})
                     .then(found => {
                         if(found) {
                             errors.handle = 'this handle already exists';
-                            res.status(400).json(errors);
+                            return res.status(400).json(errors);
+                        }
+                        else {
+                            
+                            // save the new profile
+                            new Profile(profileFields).save()
+                                .then(profile => {
+                                    return res.status(201).json(profile);
+                                })
+                                .catch(err => res.json(err));
                         }
                         
-                        // save the new profile
-                        new Profile(profileFields).save()
-                            .then(profile => {
-                                return res.status(201).json(profile);
-                            })
-                            .catch(err => res.json(err));
                     })
             }
         })
         .catch(err => res.json(err));
 
+});
+
+
+// @route GET api/profile/handle/:handle
+// @desc get user's profile by Handle
+// @access Public
+router.get('/handle/:handle', (req, res) => {
+
+    Profile.findOne({handle: req.params.handle})
+        .populate('user', ['name', 'avatar'])
+        .then(profile => {
+            if(profile) {
+                return res.status(200).json(profile);
+            }
+            else {
+                return res.status(404).json({error: 'Profile Not Found'});
+            }
+        })
+        .catch(err => res.json(err));
+});
+
+
+
+// @route GET api/profile/user/:user_id
+// @desc get user's profile by ID
+// @access Public
+router.get('/user/:user_id', (req, res) => {
+
+    Profile.findById(req.params.user_id)
+        .populate('user', ['name', 'avatar'])
+        .then(profile => {
+            if(profile) {
+                return res.status(200).json(profile);
+            }
+            else {
+                return res.status(404).json({error: 'Profile Not Found'});
+            }
+        })
+        .catch(err => res.json(err)); 
+});
+
+
+// @route GET api/profile/all
+// @desc get all the profiles
+// @access Public
+router.get('/all', (req, res) => {
+
+    Profile.find()
+        .populate('user', ['name', 'avatar'])
+        .then(profiles => {
+            if(profiles) {
+                return res.status(200).json(profiles);
+            }
+            else {
+                return res.status(404).json({error: 'No Profiles Found'});
+            }
+        })
+        .catch(err => res.json(err));
 });
 
 
