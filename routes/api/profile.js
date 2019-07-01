@@ -199,7 +199,42 @@ router.post('/experience', passport.authenticate('jwt', {session: false}), (req,
 
 
 
+// @route POST api/profile/education
+// @desc add an education to profile
+// @access Private
+router.post('/education', passport.authenticate('jwt', {session: false}), (req, res) => {
 
+    const {errors, errorsFound} = validateEducationInput(req.body);
+    if(errorsFound) {
+        return res.status(400).json(errors);
+    }
+
+
+    Profile.findOne({user: req.user._id})
+        .then(profile => {
+            if(!profile) {
+                return res.status(404).json({error: 'Profile is not found'});
+            } 
+            else {
+                const newEdu = {
+                    school: req.body.school,
+                    degree: req.body.degree,
+                    field: req.body.field,
+                    location: req.body.location,
+                    from: req.body.from,
+                    to: req.body.to,
+                    current: req.body.current
+                }
+
+                profile.education.unshift(newEdu);
+                profile.save()
+                    .then(newProfile => res.status(200).json(newProfile))
+                    .catch(err => res.json(err));
+            }
+        })
+        .catch(err => res.json(err));
+
+});
 
 
 
