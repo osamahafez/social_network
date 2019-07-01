@@ -121,7 +121,6 @@ router.get('/handle/:handle', (req, res) => {
 });
 
 
-
 // @route GET api/profile/user/:user_id
 // @desc get user's profile by ID
 // @access Public
@@ -134,30 +133,14 @@ router.get('/user/:user_id', (req, res) => {
                 return res.status(200).json(profile);
             }
             else {
-                return res.status(404).json({error: 'Profile Not Found'});
+                return res.status(404).json({error: 
+
+'Profile Not Found'});
             }
         })
         .catch(err => res.json(err)); 
 });
 
-
-// @route GET api/profile/all
-// @desc get all the profiles
-// @access Public
-router.get('/all', (req, res) => {
-
-    Profile.find()
-        .populate('user', ['name', 'avatar'])
-        .then(profiles => {
-            if(profiles) {
-                return res.status(200).json(profiles);
-            }
-            else {
-                return res.status(404).json({error: 'No Profiles Found'});
-            }
-        })
-        .catch(err => res.json(err));
-});
 
 
 module.exports = router;
