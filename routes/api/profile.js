@@ -280,4 +280,20 @@ router.delete('/education/:edu_id', passport.authenticate('jwt', {session:false}
 });
 
 
+// @route DELETE api/profile
+// @desc delete profile and user
+// @access Private
+router.delete('/', passport.authenticate('jwt', {session:false}), (req, res) => {
+
+    Profile.findOneAndDelete({user: req.user._id})
+        .then(() => {
+            User.findOneAndDelete({_id: req.user._id})
+                .then(() => {
+                    res.status(200).json({msg: 'User and Profile deleted successfully'});
+                })
+                .catch(err => res.json(err));
+        })
+        .catch(err => res.json(err));
+});
+
 module.exports = router;
