@@ -1,6 +1,7 @@
 import axios from 'axios';
-import { GET_ERRORS } from './types';
+import { GET_ERRORS, GET_CURRENT_USER } from './types';
 import setAuthToken from '../utils/setAuthToken';
+import jwt_decode from 'jwt-decode';
 
 export const registerUser = (userData, history) => (dispatch) => {
     axios
@@ -25,7 +26,10 @@ export const loginUser = (userData) => (dispatch) => {
             localStorage.setItem('jwtToken', token);
             // set the token to the authorization header (the one that you find in postman)
             setAuthToken(token);
-
+            // decode the jwt token to get user data
+            const decoded = jwt_decode(token);
+            // send the decoded data to a reducer to use the user in our components
+            dispatch(setCurrentUser(decoded));
         })
         .catch((err) =>
             dispatch({
@@ -34,3 +38,11 @@ export const loginUser = (userData) => (dispatch) => {
             })
         );
 };
+
+// send the logged in user to a reducer to use the user in the components
+export const setCurrentUser = (decoded) => {
+    return {
+        type: GET_CURRENT_USER,
+        payload: decoded
+    }
+}
