@@ -12,3 +12,16 @@ export const registerUser = (userData, history) => (dispatch) => {
             })
         );
 };
+
+// Login
+export const loginUser = (userData) => (dispatch) => {
+    axios
+        .post('/api/users/login', userData)
+        .then()
+        .catch((err) =>
+            dispatch({
+                type: GET_ERRORS,
+                payload: err.response.data
+            })
+        );
+};
