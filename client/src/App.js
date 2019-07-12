@@ -10,7 +10,7 @@ import { Route } from 'react-router-dom';
 import store from './store';
 import setAuthToken from './utils/setAuthToken';
 import jwt_decode from 'jwt-decode';
-import { setCurrentUser } from './actions/authActions';
+import { setCurrentUser, logoutUser } from './actions/authActions';
 
 // I want the user to remain logged in even after refreshing the page or moving between pages
 if (localStorage.jwtToken) {
@@ -20,6 +20,14 @@ if (localStorage.jwtToken) {
     const decoded = jwt_decode(localStorage.jwtToken);
     // send the decoded data to a reducer to use the user in our components
     store.dispatch(setCurrentUser(decoded));
+
+    // check if the token is expired
+    const currentTime = Date.now() / 1000;
+    if(currentTime > decoded.exp) {
+        store.dispatch(logoutUser());
+        //redirect to login
+        window.location.href = '/login';
+    }
 }
 
 function App() {
