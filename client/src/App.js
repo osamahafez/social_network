@@ -7,6 +7,21 @@ import Register from './components/auth/Register';
 import Login from './components/auth/Login';
 import { Route } from 'react-router-dom';
 
+import store from './store';
+import setAuthToken from './utils/setAuthToken';
+import jwt_decode from 'jwt-decode';
+import { setCurrentUser } from './actions/authActions';
+
+// I want the user to remain logged in even after refreshing the page or moving between pages
+if (localStorage.jwtToken) {
+    // set the token to the authorization header (the one that you find in postman)
+    setAuthToken(localStorage.jwtToken);
+    // decode the jwt token to get user data
+    const decoded = jwt_decode(localStorage.jwtToken);
+    // send the decoded data to a reducer to use the user in our components
+    store.dispatch(setCurrentUser(decoded));
+}
+
 function App() {
     return (
         <div className='App'>
