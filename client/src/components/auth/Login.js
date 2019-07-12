@@ -12,6 +12,13 @@ class Login extends Component {
         errors: {}
     };
 
+    componentDidMount() {
+        // prevent user from entering this page if he is authenticated
+        if(this.props.auth.isAuthenticated) {
+            this.props.history.push('/dashboard');
+        }
+    }
+
     componentWillReceiveProps(nextProps) {
 
         if(nextProps.auth.isAuthenticated) {

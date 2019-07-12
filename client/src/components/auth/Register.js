@@ -14,6 +14,13 @@ class Register extends Component {
         errors: {}
     };
 
+    componentDidMount() {
+        // prevent user from entering this page if he is authenticated
+        if(this.props.auth.isAuthenticated) {
+            this.props.history.push('/dashboard');
+        }
+    }
+
     componentWillReceiveProps(nextProps) { // check if the this.props.errors from the errorReducer have arrived
         if(nextProps.errors) {
             this.setState({errors: nextProps.errors});
