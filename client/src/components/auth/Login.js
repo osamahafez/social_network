@@ -85,11 +85,12 @@ class Login extends Component {
                                         value={this.state.password}
                                         onChange={this.onChange}
                                     />
+                                    {(errors.password || errors.password_empty) &&
                                     <div className='invalid-feedback'>
                                         {errors.password}
                                         <br/>
                                         {errors.password_empty}
-                                    </div>
+                                    </div>}
                                 </div>
                                 <input
                                     type='submit'
