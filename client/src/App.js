@@ -5,12 +5,14 @@ import Landing from './components/layout/Landing';
 import Footer from './components/layout/Footer';
 import Register from './components/auth/Register';
 import Login from './components/auth/Login';
+import Dashboard from './components/dashboard/dashboard';
 import { Route } from 'react-router-dom';
 
 import store from './store';
 import setAuthToken from './utils/setAuthToken';
 import jwt_decode from 'jwt-decode';
 import { setCurrentUser, logoutUser } from './actions/authActions';
+import { clearCurrentProfile } from './actions/profileAction';
 
 // I want the user to remain logged in even after refreshing the page or moving between pages
 if (localStorage.jwtToken) {
@@ -24,6 +26,9 @@ if (localStorage.jwtToken) {
     // check if the token is expired
     const currentTime = Date.now() / 1000;
     if(currentTime > decoded.exp) {
+        // clear profile
+        store.dispatch(clearCurrentProfile());
+        // logout
         store.dispatch(logoutUser());
         //redirect to login
         window.location.href = '/login';
@@ -39,6 +44,7 @@ function App() {
             <div className='container'>
                 <Route exact path='/register' component={Register} />
                 <Route exact path='/login' component={Login} />
+                <Route exact path='/dashboard' component={Dashboard} />
             </div>
 
             <Footer />
