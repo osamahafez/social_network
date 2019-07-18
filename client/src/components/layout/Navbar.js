@@ -10,7 +10,9 @@ class Navbar extends Component {
         e.preventDefault();
         this.props.clearCurrentProfile();
         this.props.logoutUser();
-        this.props.history.push('/login');
+        
+        // replaced by PrivateRoute component
+        //this.props.history.push('/login');
     };
 
     render() {
