@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { createProfile } from '../../actions/profileAction';
+import { withRouter } from 'react-router-dom';
 import TextFieldGroup from '../common/TextFieldGroup';
 import TextAreaFieldGroup from '../common/TextAreaFieldGroup';
 import SelectListGroup from '../common/SelectListGroup';
@@ -26,6 +28,12 @@ class CreateProfile extends Component {
         errors: {}
     }
 
+    componentWillReceiveProps(nextProps) {
+        if(nextProps.errors) {
+            this.setState({errors: nextProps.errors})
+        }
+    }
+
     onChangeHandler = (e) => {
         e.preventDefault();
         this.setState({[e.target.name]:e.target.value});
@@ -35,7 +43,23 @@ class CreateProfile extends Component {
     onSubmitHandler = (e) => {
         e.preventDefault();
         
-        console.log(this.state);
+        const profileData = {
+            handle: this.state.handle,
+            company: this.state.company,
+            location: this.state.location,
+            website: this.state.website,
+            bio: this.state.bio,
+            skills: this.state.skills,
+            status: this.state.status,
+            github: this.state.github,
+            youtube: this.state.youtube,
+            facebook: this.state.facebook,
+            instagram: this.state.instagram,
+            linkedin: this.state.linkedin,
+            twitter: this.state.twitter
+        }
+
+        this.props.createProfile(profileData, this.props.history);
     }
     
     socialBtnHandler = () => {
@@ -136,6 +160,7 @@ class CreateProfile extends Component {
                                     onChange={this.onChangeHandler}
                                     options={options}
                                     error={errors.status_empty}
+                                    info='* Required'
                                 />
 
                                 <TextAreaFieldGroup
@@ -176,6 +201,7 @@ class CreateProfile extends Component {
                                     name='github'
                                     value={this.state.github}
                                     onChange={this.onChangeHandler}
+                                    error={errors.github_format}
                                 />
 
                                 <TextFieldGroup 
@@ -184,7 +210,7 @@ class CreateProfile extends Component {
                                     name='skills'
                                     value={this.state.skills}
                                     onChange={this.onChangeHandler}
-                                    info='Separate each skill with a comma (,)'
+                                    info='* Requried. Also Separate each skill with a comma (,)'
                                     error={errors.skills_empty}
                                 />
 
@@ -205,6 +231,7 @@ class CreateProfile extends Component {
 CreateProfile.propTypes = {
     profile: PropTypes.object.isRequired,
     errors: PropTypes.object.isRequired,
+    createProfile: PropTypes.func.isRequired
 }
 
 const mapStateToProps = (state) => ({
@@ -212,4 +239,4 @@ const mapStateToProps = (state) => ({
     errors: state.errors
 })
 
-export default connect(mapStateToProps)(CreateProfile);
+export default connect(mapStateToProps, { createProfile })(withRouter(CreateProfile));

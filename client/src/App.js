@@ -5,7 +5,8 @@ import Landing from './components/layout/Landing';
 import Footer from './components/layout/Footer';
 import Register from './components/auth/Register';
 import Login from './components/auth/Login';
-import Dashboard from './components/dashboard/dashboard';
+import Dashboard from './components/dashboard/Dashboard';
+import CreateProfile from './components/CreateProfile/CreateProfile';
 import { Route, Switch } from 'react-router-dom';
 import PrivateRoute from './components/common/PrivateRoute';
 
@@ -48,6 +49,10 @@ function App() {
                 <Switch>
                     <PrivateRoute exact path='/dashboard' component={Dashboard} />   
                 </Switch>
+                <Switch>
+                    <PrivateRoute exact path='/create-profile' component={CreateProfile} />
+                </Switch>
+                
             </div>
 
             <Footer />
