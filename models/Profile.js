@@ -87,7 +87,7 @@ const profileSchema = new Schema({
             }
         }
     ],
-    social: [
+    social: 
         {
             youtube: {
                 type: String
@@ -105,7 +105,7 @@ const profileSchema = new Schema({
                 type: String
             }
         }
-    ],
+    ,
     date: {
         type: Date,
         default: Date.now
