@@ -7,6 +7,7 @@ import Register from './components/auth/Register';
 import Login from './components/auth/Login';
 import Dashboard from './components/dashboard/Dashboard';
 import CreateProfile from './components/CreateProfile/CreateProfile';
+import EditProfile from './components/EditProfile/EditProfile';
 import { Route, Switch } from 'react-router-dom';
 import PrivateRoute from './components/common/PrivateRoute';
 
@@ -52,7 +53,9 @@ function App() {
                 <Switch>
                     <PrivateRoute exact path='/create-profile' component={CreateProfile} />
                 </Switch>
-                
+                <Switch>
+                    <PrivateRoute exact path='/edit-profile' component={EditProfile} />
+                </Switch>
             </div>
 
             <Footer />
