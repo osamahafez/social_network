@@ -49,7 +49,7 @@ const profileSchema = new Schema({
                 required: true
             },
             to: {
-                type: String
+                type: Date
             },
             current: {
                 type: Boolean,
@@ -79,7 +79,7 @@ const profileSchema = new Schema({
                 required: true
             },
             to: {
-                type: String
+                type: Date
             },
             current: {
                 type: Boolean,
