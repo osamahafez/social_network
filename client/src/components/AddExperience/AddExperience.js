@@ -18,18 +18,62 @@ class AddExperience extends Component {
         errors: {}
     }
 
+    componentWillReceiveProps(nextProps) {
+        if(nextProps.errors) {
+            this.setState({errors: nextProps.errors});
+        }
+    }
+
     onChangeHandler = (e) => {
         e.preventDefault();
         this.setState({[e.target.name]: e.target.value})
     }
 
     onSubmitHandler = (e) => {
+        e.preventDefault();
+        // CREATE ACTION TO CREATE AN EXPERIENCE
         console.log(this.state);
     } 
 
+    currentClickHandler = () => {
+        this.setState(prevState => ({
+            current: !prevState.current
+        }));        
+    }
+
     render() {
 
-        const { errors } = this.state;
+        const { errors, current } = this.state;
+
+        let toDateField;
+        if(current) {
+            toDateField = (
+                <div>
+                    <label>To</label>
+                    <TextFieldGroup 
+                        type='date'
+                        name='to'
+                        value=''
+                        onChange={this.onChangeHandler}
+                        disabled='disabled'
+                    />
+                </div>
+            );
+        }
+        else {
+            toDateField = (
+                <div>
+                    <label>To</label>
+                    <TextFieldGroup 
+                        type='date'
+                        name='to'
+                        value={this.state.to}
+                        onChange={this.onChangeHandler}
+                    />
+                </div>
+            );
+        }
+
 
         return (
             <div className='section add-experience'>
@@ -53,7 +97,6 @@ class AddExperience extends Component {
                                     info='* Required'
                                     onChange={this.onChangeHandler}
                                     error={errors.title_empty}
-
                                 />
 
                                 <TextFieldGroup 
@@ -90,96 +133,19 @@ class AddExperience extends Component {
                                     onChange={this.onChangeHandler}
                                     error={errors.from_empty}
                                 />
-
                               
-            {/* zabat el onClick aw onChange */}
-                                <div className="form-check mb-2">
-                                    <label className="form-check-label">
-                                        <input 
-                                            type="radio" 
-                                            className="form-check-input" 
-                                            name="current"
-                                            value={this.state.current}
-                                        />Current
-                                    </label>
+                                <div className="custom-control custom-checkbox mb-3">
+                                    <input 
+                                        type="checkbox" 
+                                        className="custom-control-input" 
+                                        id="current" 
+                                        onClick={this.currentClickHandler}
+                                    />
+                                    <label className="custom-control-label" htmlFor="current">Current</label>
                                 </div>
 
-                                <label>To</label>
-                                <TextFieldGroup 
-                                    type='date'
-                                    name='to'
-                                    value={this.state.to}
-                                    onChange={this.onChangeHandler}
-                                />                    
+                                {toDateField}                  
 
-
-                                {/* <div class='form-group'>
-                                    <input
-                                        type='text'
-                                        class='form-control form-control-lg'
-                                        placeholder='* Job Title'
-                                        name='title'
-                                        required
-                                    />
-                                </div>
-                                <div class='form-group'>
-                                    <input
-                                        type='text'
-                                        class='form-control form-control-lg'
-                                        placeholder='* Company'
-                                        name='company'
-                                        required
-                                    />
-                                </div>
-                                <div class='form-group'>
-                                    <input
-                                        type='text'
-                                        class='form-control form-control-lg'
-                                        placeholder='Location'
-                                        name='location'
-                                    />
-                                </div>
-                                <h6>From Date</h6>
-                                <div class='form-group'>
-                                    <input
-                                        type='date'
-                                        class='form-control form-control-lg'
-                                        name='from'
-                                    />
-                                </div>
-                                <h6>To Date</h6>
-                                <div class='form-group'>
-                                    <input
-                                        type='date'
-                                        class='form-control form-control-lg'
-                                        name='to'
-                                    />
-                                </div>
-                                <div class='form-check mb-4'>
-                                    <input
-                                        class='form-check-input'
-                                        type='checkbox'
-                                        name='current'
-                                        value=''
-                                        id='current'
-                                    />
-                                    <label
-                                        class='form-check-label'
-                                        for='current'
-                                    >
-                                        Current Job
-                                    </label>
-                                </div>
-                                <div class='form-group'>
-                                    <textarea
-                                        class='form-control form-control-lg'
-                                        placeholder='Job Description'
-                                        name='description'
-                                    />
-                                    <small class='form-text text-muted'>
-                                        Some of your responsabilities, etc
-                                    </small>
-                                </div> */}
                                 <input
                                     type='submit' value='Submit' className='btn btn-info btn-block mt-4' />
                             </form>
