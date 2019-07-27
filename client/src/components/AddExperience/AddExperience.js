@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import TextFieldGroup from '../common/TextFieldGroup';
 import TextAreaFieldGroup from '../common/TextAreaFieldGroup'
+import { withRouter } from 'react-router-dom';
+import { addExperience} from '../../actions/profileAction';
 
 
 class AddExperience extends Component {
@@ -15,6 +17,7 @@ class AddExperience extends Component {
         from: '',
         to: '',
         current: false,
+        disabled: false,
         errors: {}
     }
 
@@ -31,52 +34,36 @@ class AddExperience extends Component {
 
     onSubmitHandler = (e) => {
         e.preventDefault();
-        // CREATE ACTION TO CREATE AN EXPERIENCE
+
+        const experienceData = {
+            title: this.state.title,
+            description: this.state.description,
+            company: this.state.company,
+            location: this.state.location,
+            from: this.state.from,
+            to: this.state.to,
+            current: this.state.current
+        }
+        
+        this.props.addExperience(experienceData, this.props.history);
+
         console.log(this.state);
+        
     } 
 
     currentClickHandler = () => {
         this.setState(prevState => ({
-            current: !prevState.current
+            current: !prevState.current,
+            disabled: !prevState.disabled
         }));        
     }
 
     render() {
 
-        const { errors, current } = this.state;
-
-        let toDateField;
-        if(current) {
-            toDateField = (
-                <div>
-                    <label>To</label>
-                    <TextFieldGroup 
-                        type='date'
-                        name='to'
-                        value=''
-                        onChange={this.onChangeHandler}
-                        disabled='disabled'
-                    />
-                </div>
-            );
-        }
-        else {
-            toDateField = (
-                <div>
-                    <label>To</label>
-                    <TextFieldGroup 
-                        type='date'
-                        name='to'
-                        value={this.state.to}
-                        onChange={this.onChangeHandler}
-                    />
-                </div>
-            );
-        }
-
+        const { errors } = this.state;
 
         return (
-            <div className='section add-experience'>
+            <div className='add-experience'>
                 <div className='container'>
                     <div className='row'>
                         <div className='col-md-8 m-auto'>
@@ -124,7 +111,7 @@ class AddExperience extends Component {
                                     onChange={this.onChangeHandler}
                                 />
 
-                                <label>From</label>
+                                <label>From Date</label>
                                 <TextFieldGroup 
                                     type='date'
                                     name='from'
@@ -139,12 +126,23 @@ class AddExperience extends Component {
                                         type="checkbox" 
                                         className="custom-control-input" 
                                         id="current" 
-                                        onClick={this.currentClickHandler}
+                                        name='current'
+                                        value={this.state.current}
+                                        checked={this.state.current}
+                                        onChange={this.currentClickHandler}
                                     />
                                     <label className="custom-control-label" htmlFor="current">Current</label>
                                 </div>
 
-                                {toDateField}                  
+                                <label>To Date</label>
+                                <TextFieldGroup 
+                                    type='date'
+                                    name='to'
+                                    value={this.state.to}
+                                    onChange={this.onChangeHandler}
+                                    error={errors.conflict}
+                                    disabled={this.state.disabled ? 'disabled' : ''}
+                                />               
 
                                 <input
                                     type='submit' value='Submit' className='btn btn-info btn-block mt-4' />
@@ -158,11 +156,12 @@ class AddExperience extends Component {
 }
 
 AddExperience.propTypes = {
-    errors: PropTypes.object.isRequired
+    errors: PropTypes.object.isRequired,
+    addExperience: PropTypes.func.isRequired
 }
 
 const mapStateToProps = (state) => ({
     errors: state.errors
 })
 
-export default connect(mapStateToProps)(AddExperience);
+export default connect(mapStateToProps, { addExperience })(withRouter(AddExperience));
