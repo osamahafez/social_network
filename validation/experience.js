@@ -25,13 +25,13 @@ const validateExperienceInput = (data) => {
     }
 
     if(validator.isEmpty(data.to)){  
-        if(data.current == 'false') {
+        if(data.current == false) {
             errors.conflict = 'specifiy the end date of the job or select current';
         }
     } 
         
     if(!validator.isEmpty(data.to)) {
-        if(data.current == 'true') {
+        if(data.current == true) {
             errors.conflict = 'specifiy the end date of the job or select current not both';
         }
     }
