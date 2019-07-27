@@ -39,6 +39,19 @@ export const createProfile = (profileData, history) => (dispatch) => {
         });
 };
 
+// Add experience to user's profile
+export const addExperience = (experienceData, history) => (dispatch) => {
+    axios
+        .post('/api/profile/experience', experienceData)
+        .then(() => history.push('/dashboard'))
+        .catch((err) => {
+            dispatch({
+                type: GET_ERRORS,
+                payload: err.response.data
+            });
+        });
+};
+
 // delete user and profile data
 export const deleteAccount = () => (dispatch) => {
     axios
