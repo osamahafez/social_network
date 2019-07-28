@@ -52,6 +52,19 @@ export const addExperience = (experienceData, history) => (dispatch) => {
         });
 };
 
+// Add education to user's profile
+export const addEducation = (educationData, history) => (dispatch) => {
+    axios
+        .post('/api/profile/education', educationData)
+        .then(() => history.push('/dashboard'))
+        .catch((err) => {
+            dispatch({
+                type: GET_ERRORS,
+                payload: err.response.data
+            });
+        });
+};
+
 // delete user and profile data
 export const deleteAccount = () => (dispatch) => {
     axios
