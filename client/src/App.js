@@ -9,6 +9,7 @@ import Dashboard from './components/dashboard/Dashboard';
 import CreateProfile from './components/CreateProfile/CreateProfile';
 import EditProfile from './components/EditProfile/EditProfile';
 import AddExperience from './components/AddExperience/AddExperience';
+import AddEducation from './components/AddEducation/AddEducation';
 import { Route, Switch } from 'react-router-dom';
 import PrivateRoute from './components/common/PrivateRoute';
 
@@ -59,6 +60,9 @@ function App() {
                 </Switch>
                 <Switch>
                     <PrivateRoute exact path='/add-experience' component={AddExperience} />
+                </Switch>
+                <Switch>
+                    <PrivateRoute exact path='/add-education' component={AddEducation} />
                 </Switch>
             </div>
 
