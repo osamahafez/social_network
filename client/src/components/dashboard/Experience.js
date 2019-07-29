@@ -1,18 +1,25 @@
 import React, { Component } from 'react'
+import Moment from 'react-moment';
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+import { deleteExperience } from '../../actions/profileAction';
 
 class Experience extends Component {
+
+    deleteExpHandler = (exp_id) => {
+        this.props.deleteExperience(exp_id)
+    }
+
     render() {
 
         const experienceTable = this.props.experience.map((exp, i) => {
-            // let endDate = (exp.to === '') ? exp.to : exp.to;
-            // console.log(endDate);
             return (
                         
                 <tr key={i}>
                     <td>{exp.company}</td>
                     <td>{exp.title}</td>
-                    <td>{exp.from} - {exp.to}</td>
-                    <td><button className="btn btn-danger btn-sm">Delete</button></td>
+                    <td> <Moment format='DD/MM/YYYY'>{exp.from}</Moment> - {(exp.to === null) ? 'Now' : <Moment format='DD/MM/YYYY'>{exp.to}</Moment>}</td>
+                    <td><button className="btn btn-danger btn-sm" onClick={() => this.deleteExpHandler(exp._id)}>Delete</button></td>
                 </tr>
 
             )
@@ -39,4 +46,8 @@ class Experience extends Component {
     }
 }
 
-export default Experience;
+Experience.propTypes = {
+    deleteExperience: PropTypes.func.isRequired
+}
+
+export default connect(null, { deleteExperience })(Experience);
