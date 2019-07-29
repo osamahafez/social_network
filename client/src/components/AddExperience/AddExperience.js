@@ -45,10 +45,7 @@ class AddExperience extends Component {
             current: this.state.current
         }
         
-        this.props.addExperience(experienceData, this.props.history);
-
-        console.log(this.state);
-        
+        this.props.addExperience(experienceData, this.props.history);        
     } 
 
     currentClickHandler = () => {
