@@ -4,7 +4,8 @@ import {
     GET_PROFILE,
     CLEAR_CURRENT_PROFILE,
     GET_CURRENT_USER,
-    GET_ERRORS
+    GET_ERRORS,
+    GET_PROFILES
 } from './types';
 
 // get user's profile
@@ -90,6 +91,25 @@ export const setProfileLoading = () => {
     };
 };
 
+// get all the profiles of developers
+export const getProfiles = () => (dispatch) => {
+    dispatch(setProfileLoading());
+    axios
+        .get('/api/profile/all')
+        .then((res) =>
+            dispatch({
+                type: GET_PROFILES,
+                payload: res.data
+            })
+        )
+        .catch(() =>
+            dispatch({
+                type: GET_PROFILES,
+                payload: null
+            })
+        );
+};
+
 // delete expreience by id
 export const deleteExperience = (exp_id) => (dispatch) => {
     axios
@@ -125,7 +145,6 @@ export const deleteEducation = (edu_id) => (dispatch) => {
             })
         );
 };
-
 
 //
 export const clearCurrentProfile = () => {
