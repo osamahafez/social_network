@@ -46,7 +46,7 @@ class EditProfile extends Component {
             profile.status = isEmpty(profile.status) ? '' : profile.status;
             profile.skills = isEmpty(profile.skills) ? '' : profile.skills.join();
             profile.bio = isEmpty(profile.bio) ? '' : profile.bio;
-            // profile.social = isEmpty(profile.social) ? {} : profile.social;
+            profile.social = isEmpty(profile.social) ? {} : profile.social;
             profile.social.linkedin = isEmpty(profile.social.linkedin) ? '' : profile.social.linkedin;
             profile.social.facebook = isEmpty(profile.social.facebook) ? '' : profile.social.facebook;
             profile.social.youtube = isEmpty(profile.social.youtube) ? '' : profile.social.youtube;
@@ -243,7 +243,6 @@ class EditProfile extends Component {
                                     name='github'
                                     value={this.state.github}
                                     onChange={this.onChangeHandler}
-                                    error={errors.github_format}
                                 />
 
                                 <TextFieldGroup 

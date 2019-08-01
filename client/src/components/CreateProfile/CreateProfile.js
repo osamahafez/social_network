@@ -201,7 +201,6 @@ class CreateProfile extends Component {
                                     name='github'
                                     value={this.state.github}
                                     onChange={this.onChangeHandler}
-                                    error={errors.github_format}
                                 />
 
                                 <TextFieldGroup 
