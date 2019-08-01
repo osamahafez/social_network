@@ -11,6 +11,7 @@ import EditProfile from './components/EditProfile/EditProfile';
 import AddExperience from './components/AddExperience/AddExperience';
 import AddEducation from './components/AddEducation/AddEducation';
 import Profiles from './components/profiles/Profiles';
+import Profile from './components/Profile/Profile';
 import { Route, Switch } from 'react-router-dom';
 import PrivateRoute from './components/common/PrivateRoute';
 
@@ -51,6 +52,7 @@ function App() {
                 <Route exact path='/register' component={Register} />
                 <Route exact path='/login' component={Login} />
                 <Route exact path='/profiles' component={Profiles} />
+                <Route exact path='/profile/:handle' component={Profile} />
                 <Switch>
                     <PrivateRoute exact path='/dashboard' component={Dashboard} />   
                 </Switch>
