@@ -52,6 +52,7 @@ router.post('/', passport.authenticate('jwt', {session: false}), (req, res) => {
    
     if(req.body.handle)     profileFields.handle     = req.body.handle;
     if(req.body.company)    profileFields.company    = req.body.company;
+    if(req.body.location)   profileFields.location   = req.body.location;
     if(req.body.website)    profileFields.website    = req.body.website;
     if(req.body.status)     profileFields.status     = req.body.status;
     if(req.body.bio)        profileFields.bio        = req.body.bio;
@@ -70,7 +71,7 @@ router.post('/', passport.authenticate('jwt', {session: false}), (req, res) => {
         .then(profile => {
             if(profile) {
                 // Update
-                Profile.findOneAndUpdate({user: req.user._id}, {$set: profileFields}, {new: true})
+                Profile.findOneAndUpdate({user: req.user._id}, {$set: profileFields}, {new: true, useFindAndModify: false})
                     .then(profile => {
                         return res.status(200).json(profile);
                     })
