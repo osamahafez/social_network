@@ -30,10 +30,6 @@ const validateProfileInput = (data) => {
         errors.website_format = 'Not a valid URL';
     }
 
-    if(!isEmpty(data.github) && !validator.isURL(data.github)) {
-        errors.github_format = 'Not a valid URL';
-    }
-
     if(!isEmpty(data.youtube) && !validator.isURL(data.youtube)) {
         errors.youtube_format = 'Not a valid URL';
     }
