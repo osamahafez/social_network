@@ -12,6 +12,7 @@ import AddExperience from './components/AddExperience/AddExperience';
 import AddEducation from './components/AddEducation/AddEducation';
 import Profiles from './components/profiles/Profiles';
 import Profile from './components/Profile/Profile';
+import NotFound from './components/NotFound/NotFound';
 import { Route, Switch } from 'react-router-dom';
 import PrivateRoute from './components/common/PrivateRoute';
 
@@ -68,6 +69,7 @@ function App() {
                 <Switch>
                     <PrivateRoute exact path='/add-education' component={AddEducation} />
                 </Switch>
+                <Route exact path='/not-found' component={NotFound} />
             </div>
 
             <Footer />
