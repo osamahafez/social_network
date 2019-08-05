@@ -45,6 +45,24 @@ export const getPosts = () => (dispatch) => {
         );
 };
 
+// get a post by id
+export const getPost = (post_id) => (dispatch) => {
+    dispatch(setPostLoading());
+    axios
+        .get(`/api/posts/${post_id}`)
+        .then((res) =>
+            dispatch({
+                type: GET_POST,
+                payload: res.data
+            })
+        )
+        .catch(() =>
+            dispatch({
+                type: GET_POST,
+                payload: null
+            })
+        );
+};
 
 // like a post
 export const likePost = (post_id) => (dispatch) => {
