@@ -4,12 +4,10 @@ import PostItem from './PostItem';
 
 const PostFeed = (props) => {
 
-    const postItems = props.posts.map(post => 
-        <PostItem key={post._id} post={post} />
-    );
+    const { posts } = props;
 
     return (
-        <div>{postItems}</div>
+        posts.map(post => <PostItem key={post._id} post={post} />)
     );
 }
 
