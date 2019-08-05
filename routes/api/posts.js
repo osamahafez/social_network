@@ -157,7 +157,7 @@ router.post('/comment/:post_id', passport.authenticate('jwt', {session:false}), 
             });    
             
             post.save()
-                .then(() => res.status(201).json({msg: 'comment posted successfully'}))
+                .then(() => res.status(201).json(post))
                 .catch(err => res.json(err));
         
         })
