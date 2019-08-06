@@ -166,7 +166,7 @@ router.post('/comment/:post_id', passport.authenticate('jwt', {session:false}), 
 
 
 
-// @route DELETE api/posts/comment/:post_id
+// @route DELETE api/posts/comment/:post_id/:comment_id
 // @desc delete comment on a post
 // @access Private
 router.delete('/comment/:post_id/:comment_id', passport.authenticate('jwt', {session:false}), (req, res) => {
@@ -182,7 +182,7 @@ router.delete('/comment/:post_id/:comment_id', passport.authenticate('jwt', {ses
                     found_user_and_comment = true;
                     post.comments.splice(i,1);
                     post.save()
-                        .then(() => res.status(200).json({msg: 'comment deleted successfully'}))
+                        .then(() => res.status(200).json(post))
                         .catch(err => res.json(err));
                 }   
             })
