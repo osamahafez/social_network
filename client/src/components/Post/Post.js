@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { getPost } from '../../actions/postAction';
 import PostItem from '../posts/PostItem';
 import CommentFrom from './CommentForm';
+import CommentFeed from './CommentFeed';
 import Spinner from '../common/spinner/Spinner';
 
 class Post extends Component {
@@ -25,6 +26,7 @@ class Post extends Component {
             <div>
                 <PostItem post={post} showActions={false} />
                 <CommentFrom post_id={post._id} />
+                <CommentFeed comments={post.comments} postId={post._id} />
             </div>
             );
         }
