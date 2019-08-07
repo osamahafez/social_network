@@ -39,12 +39,12 @@ class ProfileGithub extends Component {
             <div key={repo.id}>
                 <div className="row">
                     <div className="col-md-6">
-                        <h4><a href={repo.html_url} className="text-info" target="_blank" rel="noopener noreferrer">{repo.name}</a></h4>
+                        <h4><a href={repo.html_url} className="text-primary" target="_blank" rel="noopener noreferrer">{repo.name}</a></h4>
                         <p>{repo.description}</p>
                     </div>
                     <div className="col-md-6">
                         <span className='badge badge-info mr-1'>Stars: {repo.stargazers_count}</span>
-                        <span className='badge badge-warning mr-1'>Watchers: {repo.watchers_count}</span>
+                        <span className='badge badge-secondary mr-1'>Watchers: {repo.watchers_count}</span>
                         <span className='badge badge-success mr-1'>Forks: {repo.forks_count}</span>
                     </div>
                 </div>
