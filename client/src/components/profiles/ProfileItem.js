@@ -15,13 +15,13 @@ const ProfileItem = (props) => {
                     <div className="col-lg-6 col-md-4 col-8">
                         <h4>{profile.user.name}</h4>
                         <p className='lead'>{profile.status} {isEmpty(profile.company) ? null : `at ${profile.company}`}</p>
-                        <Link to={`/profile/${profile.handle}`} className='btn btn-info'>View Profile</Link>
+                        <Link to={`/profile/${profile.handle}`} className='btn btn-primary'>View Profile</Link>
                     </div>
                     <div className="col-md-4 d-none d-md-block">
                         <h5>Skills</h5>
                         <ul className="list-group">
                             {profile.skills.slice(0, 4).map((skill,i) => 
-                                <li key={i} className="list-group-item list-group-item-secondary"> <i className="fas fa-check pr-2" />{skill}</li>
+                                <li key={i} className="list-group-item list-group-item-secondary"> <i className="fas fa-check pr-2 text-success" />{skill}</li>
                             )}
                         </ul>
                     </div>

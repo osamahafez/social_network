@@ -62,7 +62,11 @@ class AddEducation extends Component {
                     <div className="row">
                         <div className="col-md-8 m-auto">
                       
-                        <h1 className="display-4 text-center">Add Education</h1>
+                        <h1 className="display-4 text-center">Education</h1>
+                        <p className='lead text-center'>
+                                Add any education that you
+                                have had in the past
+                            </p>
                         <form onSubmit={this.onSubmitHandler}>
                             <TextFieldGroup 
                                 type='text'
@@ -137,7 +141,7 @@ class AddEducation extends Component {
                                 error={errors.conflict}
                             />
 
-                            <input type="submit" value='Submit' className="btn btn-info btn-block mt-4" />
+                            <input type="submit" value='Add Education' className="btn btn-primary btn-block mt-4" />
                         </form>
                         </div>
                     </div>

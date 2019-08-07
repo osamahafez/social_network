@@ -65,7 +65,7 @@ class AddExperience extends Component {
                     <div className='row'>
                         <div className='col-md-8 m-auto'>
                             <h1 className='display-4 text-center'>
-                                Add Experience
+                                Experience
                             </h1>
                             <p className='lead text-center'>
                                 Add any developer/programming positions that you
@@ -142,7 +142,7 @@ class AddExperience extends Component {
                                 />               
 
                                 <input
-                                    type='submit' value='Submit' className='btn btn-info btn-block mt-4' />
+                                    type='submit' value='Add Experience' className='btn btn-primary btn-block mt-4' />
                             </form>
                         </div>
                     </div>

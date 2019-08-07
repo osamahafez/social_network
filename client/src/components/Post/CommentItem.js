@@ -29,7 +29,7 @@ class CommentItem extends Component {
                     
                     <div className="col-md-2">
                         {(auth.user.id === comment.user ? (<span>
-                            <button onClick={() => this.onDeleteComment(comment._id, postId)} className='btn btn-danger float-right'>
+                            <button onClick={() => this.onDeleteComment(comment._id, postId)} className='btn btn-danger btn-sm float-right'>
                                 <i className="fas fa-times"></i>
                             </button>
                         </span>) : null)}

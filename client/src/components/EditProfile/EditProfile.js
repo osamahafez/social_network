@@ -258,7 +258,7 @@ class EditProfile extends Component {
                                 <button type='button' className='btn btn-dark btn-sm mb-3' onClick={this.socialBtnHandler}>Social Links</button>
                                 {socialLinks}
 
-                                <input type="submit" value="Update" className="btn btn-info btn-block mt-4"/>
+                                <input type="submit" value="Update" className="btn btn-primary btn-block mt-4"/>
                             </form>
                         </div>
                     </div>

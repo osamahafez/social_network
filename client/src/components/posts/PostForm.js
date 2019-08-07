@@ -40,8 +40,8 @@ class PostForm extends Component {
 
         return (
             <div className="post-form mb-3">
-                <div className="card card-info">
-                    <div className="card-header bg-info text-white">
+                <div className="card card-primary post-card">
+                    <div className="card-header bg-dark text-white">
                         What's on your mind...
                     </div>
                     <div className="card-body">
@@ -55,7 +55,7 @@ class PostForm extends Component {
                                     error={errors.text_empty}
                                 />
                             </div>
-                            <button type="submit" className="btn btn-dark">Post It</button>
+                            <button type="submit" className="btn btn-primary">Post It</button>
                         </form>
                     </div>
                 </div>

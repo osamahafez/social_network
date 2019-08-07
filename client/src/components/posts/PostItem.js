@@ -50,13 +50,13 @@ class PostItem extends Component {
 
                         {showActions ? (<span>
                             <button type="button" onClick={() => this.onLikeHandler(post._id)} className="btn btn-light mr-1">
-                                <i className={classnames('text-secondary fas fa-thumbs-up', {'text-info': this.checkLiked(post.likes)})}></i>
+                                <i className={classnames('fas fa-thumbs-up', {'text-primary': this.checkLiked(post.likes), 'text-secondary': !this.checkLiked(post.likes)})}></i>
                                 <span className="badge badge-light ml-1">{post.likes.length}</span>
                             </button>
                             <button type="button" onClick={() => this.onUnlikeHandler(post._id)} className="btn btn-light mr-1">
                                 <i className="text-secondary fas fa-thumbs-down"></i>
                             </button>
-                            <Link to={`/post/${post._id}`} className="btn btn-info mr-1"> Comments </Link>
+                            <Link to={`/post/${post._id}`} className="btn btn-primary mr-1"> Comments </Link>
                             {(post.user === auth.user.id) ? 
                                 <button onClick={() => this.onDeleteHandler(post._id)} className="btn btn-danger"> <i className='fas fa-times'></i> </button>
                                 : null}
